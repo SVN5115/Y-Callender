@@ -2048,6 +2048,366 @@ body.calendar-focused .daily-check-line>.daily-quick-delete:focus-visible{
  .profile-modal .yc-admin-profile-button{margin-right:auto}
 }
 </style>
+
+<style id="ycalender-v86-reference-daily-panel">
+/* v86: reference screenshot daily agenda card. Visual changes only — event/work handlers stay intact. */
+body.calendar-focused .detail-rail .detail-card:first-child {
+  border:1px solid #dae5f4;
+  border-radius:22px;
+  background:#fff;
+  box-shadow:0 14px 32px rgba(37,79,134,.07);
+  padding:24px 21px 24px;
+  overflow:hidden;
+}
+body.calendar-focused .detail-rail .detail-top {
+  display:block;
+  min-height:140px;
+  padding:0 2px 25px;
+  margin:0 0 17px;
+  border-bottom:1px solid #e2eaf6;
+}
+body.calendar-focused .detail-rail .detail-top .small-kicker {
+  display:block;
+  margin:0 0 15px;
+  color:#7489a6;
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:-.15px;
+}
+body.calendar-focused .yc-date-header-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+}
+body.calendar-focused .yc-date-heading {min-width:0;flex:0 0 auto}
+body.calendar-focused .detail-top h2 {
+  margin:0 0 9px;
+  color:#152f53;
+  font-size:31px;
+  line-height:1.13;
+  font-weight:900;
+  letter-spacing:-1.5px;
+  white-space:nowrap;
+}
+body.calendar-focused .detail-rail .selected-weekday {
+  display:block;
+  font-size:14px;
+  font-weight:750;
+  line-height:1.4;
+  letter-spacing:-.2px;
+  color:#8497b1;
+}
+body.calendar-focused #addForDay.add-inline {
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  margin:1px 0 0;
+  width:auto;
+  flex:0 1 auto;
+  min-height:48px;
+  padding:11px 15px;
+  white-space:nowrap;
+  border:1px dashed #d3e2fb;
+  border-radius:9px;
+  background:#eef5ff;
+  box-shadow:0 0 0 5px #f7faff;
+  color:#3675c9;
+  font-size:14px;
+  font-weight:850;
+  line-height:1.2;
+}
+body.calendar-focused #addForDay.add-inline:hover {background:#e1eeff;border-color:#a7c9f5}
+body.calendar-focused #addForDay.add-inline span:first-child {font-size:24px;font-weight:700;line-height:1}
+body.calendar-focused .detail-rail .detail-heading[hidden] {display:none!important}
+body.calendar-focused .day-events.daily-summary-list {
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+  max-height:none;
+  overflow:visible;
+  padding:0;
+}
+body.calendar-focused .day-events .daily-overview {display:none!important}
+body.calendar-focused .daily-group {
+  border-radius:15px;
+  border:1px solid var(--group-border);
+  background:#fff;
+  overflow:hidden;
+  box-shadow:0 1px 2px rgba(39,84,144,.025);
+}
+body.calendar-focused .daily-group-calendar {--group-tint:#e9f2ff;--group-border:#ccdefb;--group-color:#3378d8}
+body.calendar-focused .daily-group-routine {--group-tint:#f1ecff;--group-border:#e6ddff;--group-color:#6b5ad6}
+body.calendar-focused .daily-group-spending {--group-tint:#e5f8f1;--group-border:#cfeee1;--group-color:#08a27a}
+body.calendar-focused .daily-group-report {--group-tint:#fff5e6;--group-border:#f6e3c8;--group-color:#bb842b}
+body.calendar-focused .daily-group-meeting {--group-tint:#fff0f3;--group-border:#f6dae2;--group-color:#d05c78}
+body.calendar-focused .daily-group-head-row {min-height:54px}
+body.calendar-focused .daily-group-heading {
+  min-height:54px;
+  font-size:16px;
+  font-weight:850;
+  gap:10px;
+  padding:11px 17px;
+  line-height:1.3;
+  letter-spacing:-.35px;
+}
+body.calendar-focused .daily-group-icon {width:24px;flex-basis:24px;font-size:20px}
+body.calendar-focused .daily-group-icon.is-svg svg {width:22px;height:22px}
+body.calendar-focused .daily-group-count {font-size:13px;margin-left:auto;color:#788da9;letter-spacing:-.2px}
+body.calendar-focused .daily-group-head-row .daily-group-add {
+  flex:0 0 35px;
+  min-width:35px;
+  padding:0;
+  font-size:26px;
+}
+body.calendar-focused .daily-group-head-row .daily-group-chevron-button {
+  flex:0 0 35px;
+  min-width:35px;
+  padding:0 9px 0 0;
+}
+body.calendar-focused .daily-group-chevron {font-size:18px;line-height:1}
+body.calendar-focused .daily-group-items,
+body.calendar-focused .daily-group-routine .daily-group-items {
+  min-height:69px;
+  padding:15px 16px;
+  gap:7px;
+  justify-content:center;
+}
+body.calendar-focused .daily-no-items {margin:auto 0;padding:10px 0;color:#a8b5c8;font-size:13px;font-weight:650}
+body.calendar-focused .daily-check-line {gap:12px;align-items:center;min-height:37px;padding:5px 3px}
+body.calendar-focused .daily-check-input {width:23px;height:23px;flex-basis:23px;margin:0;border-radius:6px;border-color:#a9b9ce}
+body.calendar-focused .daily-item-title {font-size:14px;font-weight:650;line-height:1.55}
+body.calendar-focused .routine-subgroup .daily-check-line {align-items:flex-start}
+body.calendar-focused .routine-subgroup .daily-check-input {margin-top:3px}
+@media(min-width:1400px) {
+  body.calendar-focused .calendar-only.workspace {grid-template-columns:minmax(0,1fr) clamp(425px,34vw,530px);gap:18px}
+}
+@media(min-width:1051px) and (max-width:1399px) {
+  body.calendar-focused .calendar-only.workspace {grid-template-columns:minmax(0,1fr) minmax(350px,32vw);gap:15px}
+  body.calendar-focused .detail-rail .detail-card:first-child {padding:19px 15px 20px}
+  body.calendar-focused .detail-top h2{font-size:27px}
+  body.calendar-focused #addForDay.add-inline{font-size:12px;padding:10px 9px;gap:4px;box-shadow:0 0 0 3px #f7faff}
+}
+@media(min-width:761px) and (max-width:1050px){
+  body.calendar-focused .calendar-only.workspace{grid-template-columns:minmax(0,1fr) 320px;gap:11px}
+  body.calendar-focused .detail-rail .detail-card:first-child {padding:17px 12px}
+  body.calendar-focused .detail-top h2{font-size:25px}
+  body.calendar-focused #addForDay.add-inline{font-size:11px;gap:4px;padding:9px 8px;min-height:42px;box-shadow:none}
+  body.calendar-focused .daily-group-heading {font-size:14px;padding:9px 10px}
+}
+@media(max-width:760px){
+  body.calendar-focused .detail-rail .detail-card:first-child{padding:22px 17px 23px;border-radius:21px}
+  body.calendar-focused .detail-rail .detail-top{min-height:118px;padding-bottom:20px}
+  body.calendar-focused .detail-top h2{font-size:30px}
+  body.calendar-focused #addForDay.add-inline {font-size:13px;min-height:44px;padding:9px 11px;gap:6px}
+  body.calendar-focused .daily-group-head-row,body.calendar-focused .daily-group-heading{min-height:52px}
+  body.calendar-focused .daily-group-heading{font-size:15px;padding:10px 13px}
+  body.calendar-focused .daily-group-items,body.calendar-focused .daily-group-routine .daily-group-items{min-height:68px;padding:13px 14px}
+  body.calendar-focused .daily-no-items {font-size:13px}
+}
+@media(max-width:410px){
+  body.calendar-focused .yc-date-header-row {flex-wrap:wrap;gap:15px}
+  body.calendar-focused .detail-rail .detail-top {min-height:156px}
+  body.calendar-focused #addForDay.add-inline {width:100%;margin:0;box-shadow:none}
+}
+@media print{body.calendar-focused .day-events.daily-summary-list{max-height:none;overflow:visible}}
+</style>
+
+<style id="ycalender-v87-balanced-calendar-and-detail">
+/* v87: make the right date-summary rail proportionate to the monthly calendar.
+   Visual refinements only. Do not change event, checklist, Supabase or admin logic. */
+@media (min-width:1400px) {
+  body.calendar-focused .calendar-only.workspace {
+    grid-template-columns:minmax(0,1fr) clamp(350px,24vw,410px);
+    gap:16px;
+  }
+}
+@media (min-width:1051px) and (max-width:1399px) {
+  body.calendar-focused .calendar-only.workspace {
+    grid-template-columns:minmax(0,1fr) clamp(315px,28vw,365px);
+    gap:14px;
+  }
+}
+@media (min-width:761px) and (max-width:1050px) {
+  body.calendar-focused .calendar-only.workspace {
+    grid-template-columns:minmax(0,1fr) 290px;
+    gap:12px;
+  }
+}
+body.calendar-focused .detail-rail {
+  min-width:0;
+  width:100%;
+}
+body.calendar-focused .detail-rail .detail-card:first-child {
+  border-radius:18px;
+  padding:17px 15px 18px;
+}
+body.calendar-focused .detail-rail .detail-top {
+  min-height:99px;
+  padding:0 0 14px;
+  margin:0 0 13px;
+}
+body.calendar-focused .detail-rail .detail-top .small-kicker {
+  font-size:11px;
+  margin-bottom:10px;
+}
+body.calendar-focused .yc-date-header-row {gap:9px;align-items:flex-start;}
+body.calendar-focused .detail-top h2 {
+  font-size:25px;
+  letter-spacing:-1px;
+  line-height:1.15;
+  margin:0 0 5px;
+}
+body.calendar-focused .detail-rail .selected-weekday {
+  font-size:12px;
+  line-height:1.4;
+}
+body.calendar-focused #addForDay.add-inline {
+  min-height:39px;
+  padding:7px 10px;
+  font-size:11.5px;
+  gap:5px;
+  margin:0;
+  box-shadow:0 0 0 3px #f7faff;
+  border-radius:8px;
+}
+body.calendar-focused #addForDay.add-inline span:first-child {font-size:19px;}
+body.calendar-focused .day-events.daily-summary-list {
+  gap:10px;
+}
+body.calendar-focused .daily-group {border-radius:12px;}
+body.calendar-focused .daily-group-head-row,
+body.calendar-focused .daily-group-heading {min-height:43px;}
+body.calendar-focused .daily-group-heading {
+  padding:8px 12px;
+  font-size:13.5px;
+  gap:8px;
+}
+body.calendar-focused .daily-group-icon {width:19px;flex-basis:19px;font-size:17px;}
+body.calendar-focused .daily-group-icon.is-svg svg {width:18px;height:18px;}
+body.calendar-focused .daily-group-count {font-size:11px;}
+body.calendar-focused .daily-group-head-row .daily-group-add,
+body.calendar-focused .daily-group-head-row .daily-group-chevron-button {
+  flex:0 0 30px;
+  min-width:30px;
+}
+body.calendar-focused .daily-group-head-row .daily-group-add {font-size:23px;}
+body.calendar-focused .daily-group-head-row .daily-group-chevron-button {padding-right:7px;}
+body.calendar-focused .daily-group-chevron {font-size:16px;}
+body.calendar-focused .daily-group-items,
+body.calendar-focused .daily-group-routine .daily-group-items {
+  min-height:51px;
+  padding:10px 12px;
+  gap:5px;
+}
+body.calendar-focused .daily-no-items {font-size:11.5px;padding:5px 0;}
+body.calendar-focused .daily-check-line {min-height:32px;gap:9px;padding:4px 2px;}
+body.calendar-focused .daily-check-input {width:19px;height:19px;flex-basis:19px;}
+body.calendar-focused .daily-item-title {font-size:12.5px;}
+@media (min-width:761px) and (max-width:1100px) {
+  body.calendar-focused .detail-top h2 {font-size:22px;}
+  body.calendar-focused #addForDay.add-inline {font-size:10px;min-height:37px;padding:6px 7px;gap:3px;box-shadow:none;}
+  body.calendar-focused .detail-rail .detail-card:first-child{padding:15px 11px 16px;}
+  body.calendar-focused .daily-group-heading{font-size:12.5px;padding:8px 9px;}
+  body.calendar-focused .yc-date-header-row{flex-wrap:wrap;gap:8px;}
+  body.calendar-focused #addForDay.add-inline{width:100%;justify-content:center;}
+}
+@media (max-width:760px) {
+  body.calendar-focused .detail-rail .detail-card:first-child {padding:17px 15px 19px;}
+  body.calendar-focused .detail-rail .detail-top {min-height:0;padding-bottom:16px;margin-bottom:13px;}
+  body.calendar-focused .detail-top h2 {font-size:25px;}
+  body.calendar-focused #addForDay.add-inline {font-size:12px;min-height:41px;padding:8px 10px;gap:5px;}
+  body.calendar-focused .daily-group-heading {font-size:14px;}
+  body.calendar-focused .daily-group-head-row,body.calendar-focused .daily-group-heading{min-height:46px;}
+  body.calendar-focused .daily-group-items,body.calendar-focused .daily-group-routine .daily-group-items {min-height:56px;}
+}
+@media (max-width:410px) {
+  body.calendar-focused .detail-rail .detail-top {min-height:0;}
+  body.calendar-focused .yc-date-header-row {flex-wrap:wrap;gap:11px;}
+  body.calendar-focused #addForDay.add-inline {width:100%;justify-content:center;}
+}
+</style>
+
+<style id="ycalender-v88-slimmer-date-panel">
+/* v88 — requested visual adjustments for the selected-day panel only.
+   Scale desktop rail to 90% of v87; reduce relevant font weights ~10%.
+   No state/storage/auth/handler code is changed. */
+@media (min-width:1400px) {
+  body.calendar-focused .calendar-only.workspace {
+    grid-template-columns:minmax(0,1fr) clamp(315px,21.6vw,369px);
+  }
+}
+@media (min-width:1051px) and (max-width:1399px) {
+  body.calendar-focused .calendar-only.workspace {
+    grid-template-columns:minmax(0,1fr) clamp(284px,25.2vw,329px);
+  }
+}
+@media (min-width:761px) and (max-width:1050px) {
+  body.calendar-focused .calendar-only.workspace {
+    grid-template-columns:minmax(0,1fr) 261px;
+  }
+}
+/* Keep the same reduced-width proportion even when the rail stacks on small screens. */
+@media (max-width:760px) {
+  body.calendar-focused .calendar-only.workspace .detail-rail {
+    width:90%;
+    max-width:100%;
+    margin-inline:auto;
+  }
+}
+/* Weight changes are deliberately limited to text inside the selected-day card. */
+body.calendar-focused .detail-rail .detail-top .small-kicker {font-weight:720;}
+body.calendar-focused .detail-rail .detail-top h2 {font-weight:810;}
+body.calendar-focused .detail-rail .selected-weekday {font-weight:675;}
+body.calendar-focused .detail-rail #addForDay.add-inline {font-weight:765;}
+body.calendar-focused .detail-rail .daily-group-heading {font-weight:765;}
+body.calendar-focused .detail-rail .daily-group-count {font-weight:675;}
+body.calendar-focused .detail-rail .daily-no-items {font-weight:585;}
+body.calendar-focused .detail-rail .daily-item-title {font-weight:585;}
+/* Prevent narrow panel buttons from overlapping the date header. */
+@media (min-width:761px) and (max-width:1399px) {
+  body.calendar-focused .detail-rail .yc-date-header-row {flex-wrap:wrap;}
+  body.calendar-focused .detail-rail #addForDay.add-inline {width:100%;justify-content:center;}
+}
+</style>
+
+
+<style id="ycalender-v89-day-add-compact">
+/* v89: Match the selected-day add action to the top '새 일정 등록' control's
+   36px height and compact typography, keeping the current label/behavior. */
+body.calendar-focused .detail-rail #addForDay.add-inline {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  box-sizing:border-box;
+  flex:0 0 auto;
+  width:max-content;
+  max-width:100%;
+  height:36px;
+  min-height:36px;
+  padding:0 9px;
+  gap:4px;
+  margin:0;
+  border-radius:8px;
+  font-size:10.5px;
+  font-weight:765;
+  line-height:1;
+  white-space:nowrap;
+  box-shadow:none;
+}
+body.calendar-focused .detail-rail #addForDay.add-inline span:last-child {
+  font-size:10.5px;
+  font-weight:765;
+  line-height:1.15;
+}
+body.calendar-focused .detail-rail #addForDay.add-inline span:first-child {
+  font-size:15px;
+  font-weight:650;
+  line-height:1;
+}
+</style>
+
 </head>
 <body class="calendar-focused">
   <div class="shell">
@@ -2113,10 +2473,15 @@ body.calendar-focused .daily-check-line>.daily-quick-delete:focus-visible{
 
         <aside class="detail-rail">
           <section class="detail-card">
-            <div class="detail-top"><div><span class="small-kicker">선택한 날짜의 일정</span><h2 id="selectedDayTitle"></h2><span id="selectedWeekday" class="selected-weekday"></span></div></div>
-            <div class="detail-heading"><strong>날짜별 일정 요약</strong><span class="count-pill" id="selectedCount">0</span></div>
+            <div class="detail-top">
+              <span class="small-kicker">선택한 날짜의 일정</span>
+              <div class="yc-date-header-row">
+                <div class="yc-date-heading"><h2 id="selectedDayTitle"></h2><span id="selectedWeekday" class="selected-weekday"></span></div>
+                <button type="button" class="add-inline" id="addForDay"><span aria-hidden="true">＋</span><span>이 날짜에 일정 등록</span></button>
+              </div>
+            </div>
+            <div class="detail-heading" hidden><strong>날짜별 일정 요약</strong><span class="count-pill" id="selectedCount">0</span></div>
             <div id="dayEvents" class="day-events"></div>
-            <button class="add-inline" id="addForDay"><span>＋</span> 이 날짜에 일정 등록</button>
           </section>
           <section class="detail-card upcoming-card"><div class="detail-heading upcoming-title"><strong>다가오는 일정</strong><span class="subtle-arrow">↗</span></div><div id="upcomingEvents" class="upcoming-list"></div></section>
           <section class="data-panel"><b>내 일정 데이터</b><p>백업 파일을 보관하거나 다른 브라우저로 가져올 수 있습니다.</p><div class="data-actions"><button id="exportButton" class="outline-button">내보내기</button><button id="importButton" class="outline-button">가져오기</button><input type="file" id="importFile" accept=".json,application/json" hidden /></div></section>
