@@ -60,11 +60,6 @@
 .auth-card .auth-error{min-height:20px;margin:14px 0 0;font-size:12px;color:#bf3535;text-align:center;line-height:1.55;white-space:pre-line}
 .auth-card .auth-error.is-info{color:#276195}
 .auth-card .auth-signup-hint{font-size:11px;line-height:1.65;color:#738398;background:#f5f8fc;border:1px solid #e5ebf3;border-radius:9px;padding:11px 12px;margin-top:10px}
-.auth-card .auth-connect-footer{text-align:center;border-top:1px solid #eef2f6;margin-top:18px;padding-top:16px;color:#8391a2;font-size:12px;line-height:1.6}
-.auth-card .auth-connect-footer small{display:block;color:#8391a2;font-size:11px}
-.auth-card .auth-connect-footer .cloud-link-btn{font-size:12px;font-weight:750}
-.auth-card .auth-config-state{color:#a96618;font-size:11px;margin-top:6px}
-.auth-card .auth-config-state.is-ready{color:#46845f}
 #authConfirmRow[hidden],#authSignupHint[hidden]{display:none!important}
 @media(max-width:520px){.auth-overlay{padding:16px}.auth-overlay .auth-card{padding:29px 23px 23px}}
 
@@ -2322,7 +2317,7 @@ body.calendar-focused .daily-check-line>.daily-quick-delete:focus-visible{
         <button id="authSignupTab" type="button" role="tab" aria-selected="false" aria-controls="authForm">계정 생성</button>
       </div>
       <label class="auth-label" for="authUsername">아이디
-        <input id="authUsername" name="username" type="text" minlength="3" maxlength="32" required autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="아이디를 입력하세요" aria-describedby="authUsernameHelp">
+        <input id="authUsername" name="username" type="text" minlength="3" maxlength="32" required autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="아이디를 입력하세요">
       </label>
       <label class="auth-label" for="authPassword">비밀번호
         <input id="authPassword" name="password" type="password" required autocomplete="current-password" placeholder="비밀번호를 입력하세요">
@@ -2333,14 +2328,13 @@ body.calendar-focused .daily-check-line>.daily-quick-delete:focus-visible{
       <button type="submit" id="authSubmit" class="primary-button auth-submit">로그인</button>
       <p id="authMessage" role="status" aria-live="polite" class="auth-error"></p>
       <div id="authSignupHint" class="auth-signup-hint" hidden>아이디는 원문 대신 일방향 해시로 계정을 구분합니다. 비밀번호는 글자 수와 문자 종류를 제한하지 않으며, 서버에는 키 유도값이 전달되어 Supabase Auth에서 다시 해시로 저장됩니다. 짧고 쉬운 비밀번호는 추측당하기 쉬우므로 가급적 길게 설정하세요. 이메일 복구 기능은 제공하지 않습니다.</div>
-      <div class="auth-connect-footer"><small id="authUsernameHelp">아이디는 3~32자 · 비밀번호는 길이·문자 종류 제한 없음(빈 비밀번호 제외)</small>
-        <div><span id="authCloudStatus" class="auth-config-state">Supabase 자동 연결을 확인하는 중입니다.</span></div>
-      </div>
+      <!-- Supabase connection status is still present for JavaScript compatibility, but hidden from the login UI. -->
+      <span id="authCloudStatus" hidden aria-hidden="true"></span>
     </form>
   </div>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 <script>
-// Y Calender v78 — preconfigured automatic Supabase connection (GitHub Pages auto-connect).
+// Y Calender v84 — automatic Supabase connection; HTTPS/WebCrypto environment diagnostics.
 // Edit the TWO quoted strings below BEFORE uploading index.html to GitHub.
 // ① Project URL  → Supabase project → Connect or Settings → Data API
 // ② Publishable Key → Supabase project → Settings → API Keys
@@ -5510,7 +5504,7 @@ injectDialogs();window.JariBudget={render,presets,totals,normalizeDate,showBoard
     $('authPassword').autocomplete=creating?'new-password':'current-password';
     $('authSubmit').textContent=creating?'계정 생성하기':'로그인';
     $('authSignupHint').hidden=!creating;
-    errorUI('');
+    errorUI(authEnvironmentProblem());
   }
   function normalizedUsername(){
     const id=$('authUsername').value.trim().normalize('NFKC').toLowerCase();
@@ -5518,10 +5512,24 @@ injectDialogs();window.JariBudget={render,presets,totals,normalizeDate,showBoard
       throw new Error('아이디는 3~32자의 한글·영문·숫자·점·밑줄·하이픈만 사용할 수 있습니다.');
     return id;
   }
+  // v84: Detect unsupported / insecure browser contexts before deriving credentials.
+  // Never downgrade cryptography or transmit plain-text passwords as a workaround.
+  function authEnvironmentProblem(){
+    const proto=window.location.protocol;
+    const hasSubtle=typeof globalThis.crypto?.subtle?.digest==='function' &&
+                    typeof globalThis.crypto?.subtle?.importKey==='function';
+    const isSecure=window.isSecureContext===true;
+    if(isSecure && hasSubtle)return '';
+    if(proto==='file:')return 'PC에 저장된 HTML을 직접 열었습니다. GitHub Pages에 index.html을 게시하고 https://...github.io/... 주소로 접속해 주세요. (파일을 더블클릭해 실행하면 브라우저 보안 기능이 제한될 수 있습니다.)';
+    if(proto==='http:' && !['localhost','127.0.0.1','[::1]'].includes(window.location.hostname))
+      return '현재 HTTP 주소로 접속했습니다. GitHub Pages의 https:// 주소로 다시 접속해 주세요. GitHub Settings → Pages에서 HTTPS 적용 여부도 확인해 주세요.';
+    if(!isSecure)return '이 페이지는 브라우저에서 보안 연결로 인식되지 않았습니다. HTTPS로 게시한 웹주소를 Chrome 또는 Edge의 일반 탭에서 열어 주세요.';
+    return '현재 브라우저에서 로그인에 필요한 Web Crypto 기능을 사용할 수 없습니다. 최신 Chrome 또는 Edge로 GitHub Pages HTTPS 주소를 직접 열어 주세요. 앱 내부 미리보기나 제한된 웹뷰에서는 동작하지 않을 수 있습니다.';
+  }
   async function accountEmail(username){
     // Stable account lookup; no literal username is stored in the synthetic Auth email.
     // This public SHA-256 hash is pseudonymization, not private encryption.
-    if(!globalThis.crypto?.subtle)throw new Error('계정 생성·로그인에는 보안 연결(HTTPS 또는 지원 브라우저)이 필요합니다.');
+    if(authEnvironmentProblem())throw new Error(authEnvironmentProblem());
     const input=new TextEncoder().encode('ycallender:account-id:v1:'+username);
     const bytes=new Uint8Array(await crypto.subtle.digest('SHA-256',input));
     const hex=Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');
@@ -5534,7 +5542,7 @@ injectDialogs();window.JariBudget={render,presets,totals,normalizeDate,showBoard
   // do not derive the same value. This is not a substitute for strong passwords.
   async function authPasswordForServer(username,password){
     if(!password)throw new Error('비밀번호를 입력하세요. 한 글자부터 사용할 수 있습니다.');
-    if(!globalThis.crypto?.subtle)throw new Error('보안 연결(HTTPS 또는 지원 브라우저)이 필요합니다.');
+    if(authEnvironmentProblem())throw new Error(authEnvironmentProblem());
     const encoder=new TextEncoder();
     const key=await crypto.subtle.importKey('raw',encoder.encode(password),'PBKDF2',false,['deriveBits']);
     const salt=encoder.encode('ycallender:auth-password:v76:'+username);
@@ -5615,6 +5623,8 @@ injectDialogs();window.JariBudget={render,presets,totals,normalizeDate,showBoard
   async function submitAuth(event){
     event.preventDefault();
     if(authBusy)return;
+    const environmentProblem=authEnvironmentProblem();
+    if(environmentProblem){errorUI(environmentProblem);return;}
     if(!configured||!client){errorUI('사이트에 Supabase 자동 연결 정보가 등록되지 않았습니다. 사이트 관리자에게 알려주세요.');return;}
     try{
       const name=normalizedUsername();
@@ -5804,7 +5814,9 @@ injectDialogs();window.JariBudget={render,presets,totals,normalizeDate,showBoard
   $('authLoginTab').addEventListener('click',()=>setAuthMode('login'));
   $('authSignupTab').addEventListener('click',()=>setAuthMode('signup'));
   setAuthMode('login');
-  $('authCloudStatus').textContent=configured?'Supabase 자동 연결 활성화 · v82':'사이트 관리자 설정 필요';
+  $('authCloudStatus').textContent=configured?'Supabase 연결 정보 등록됨 · v84':'사이트 관리자 설정 필요';
+  const environmentProblem=authEnvironmentProblem();
+  if(environmentProblem){errorUI(environmentProblem);display('보안 환경 확인 필요');}
   $('authCloudStatus').classList.toggle('is-ready',configured);
   $('logoutButton').addEventListener('click',signOut);
   if(!configured){display('사이트 관리자 설정 필요');errorUI('홈페이지 관리자가 Supabase Project URL과 Publishable Key를 index.html에 등록해야 합니다.');return;} 
