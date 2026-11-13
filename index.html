@@ -1958,7 +1958,27 @@ body.calendar-focused .daily-check-line>.daily-quick-delete:focus-visible{
 .cloud-settings-footer .footer-spacer{flex:1}
 .cloud-link-btn{border:0;background:transparent;color:#2271ce;cursor:pointer;text-decoration:underline;font-size:inherit;padding:0 2px}
 @media(max-width:760px){.cloud-settings-label{display:none}.cloud-mini-btn{padding:8px 7px;font-size:11px}.topbar-right .cloud-mini-btn{flex-shrink:0}.cloud-settings-form{padding:17px}.cloud-settings-footer button{font-size:12px;padding:9px}}
-</style></head>
+</style>
+<style id="ycallender-v79-header-action-spacing">
+/* Keep the calendar's action button away from the separately fixed account controls. */
+@media (min-width: 1051px) {
+  body.calendar-focused .calendar-shortcuts {
+    box-sizing: border-box;
+    padding-right: var(--yc-account-toolbar-reserve, 160px) !important;
+  }
+  body.calendar-focused .topbar-right {
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+  }
+  body.calendar-focused .topbar-right > button { flex-shrink: 0; }
+}
+@media (max-width: 1050px) {
+  /* At tablet widths, the shortcuts wrap below the stats rather than beside the toolbar. */
+  body.calendar-focused .calendar-shortcuts { padding-right: 0 !important; }
+}
+</style>
+</head>
 <body class="calendar-focused">
   <div class="shell">
     <header class="topbar">
@@ -5575,7 +5595,7 @@ injectDialogs();window.JariBudget={render,presets,totals,normalizeDate,showBoard
   $('authLoginTab').addEventListener('click',()=>setAuthMode('login'));
   $('authSignupTab').addEventListener('click',()=>setAuthMode('signup'));
   setAuthMode('login');
-  $('authCloudStatus').textContent=configured?'Supabase 자동 연결 활성화 · v78':'사이트 관리자 설정 필요';
+  $('authCloudStatus').textContent=configured?'Supabase 자동 연결 활성화 · v79':'사이트 관리자 설정 필요';
   $('authCloudStatus').classList.toggle('is-ready',configured);
   $('logoutButton').addEventListener('click',signOut);
   if(!configured){display('사이트 관리자 설정 필요');errorUI('홈페이지 관리자가 Supabase Project URL과 Publishable Key를 index.html에 등록해야 합니다.');return;} 
@@ -5897,5 +5917,26 @@ injectDialogs();window.JariBudget={render,presets,totals,normalizeDate,showBoard
 })();
 </script>
 
+
+<script id="ycallender-v79-header-action-spacing-script">
+(function () {
+  const toolbar = document.querySelector('.topbar-right');
+  if (!toolbar) return;
+  const syncReservedWidth = () => {
+    // Width automatically grows after sign-in or if the local-import button appears.
+    const reserved = Math.ceil(toolbar.getBoundingClientRect().width + 22);
+    document.documentElement.style.setProperty('--yc-account-toolbar-reserve', Math.max(160, reserved) + 'px');
+  };
+  if ('ResizeObserver' in window) {
+    const observer = new ResizeObserver(syncReservedWidth);
+    observer.observe(toolbar);
+  }
+  // Hidden controls toggle when the authentication state changes.
+  const mutations = new MutationObserver(syncReservedWidth);
+  mutations.observe(toolbar, { subtree: true, attributes: true, attributeFilter: ['hidden','style','class'] });
+  window.addEventListener('resize', syncReservedWidth, { passive: true });
+  syncReservedWidth();
+})();
+</script>
 </body>
 </html>
