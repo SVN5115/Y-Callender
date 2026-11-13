@@ -1969,7 +1969,7 @@ body.calendar-focused .daily-check-line>.daily-quick-delete:focus-visible{
         <div class="brand-text"><span class="brand-name">Y Callender</span><span class="brand-tag">우리의 일정을 더 편리하게</span></div>
       </div>
       <div class="topbar-right">
-        <button id="cloudImportButton" type="button" class="cloud-mini-btn cloud-import-btn" hidden title="이전 브라우저의 로컬 자료를 클라우드로 복사합니다">로컬 자료 가져오기</button><button id="cloudSettingsButton" type="button" class="cloud-mini-btn" title="Supabase 연결 설정">☁ <span class="cloud-settings-label">연결 설정</span></button><button id="logoutButton" class="outline-button" hidden type="button">로그아웃</button><button id="profileButton" type="button" class="user-button" title="내 정보 변경"><span class="user-avatar" id="profileAvatar">나</span><span id="profileLabel">내 정보 설정</span><svg class="chev" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 8 5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+        <button id="cloudImportButton" type="button" class="cloud-mini-btn cloud-import-btn" hidden title="이전 브라우저의 로컬 자료를 클라우드로 복사합니다">로컬 자료 가져오기</button><button id="logoutButton" class="outline-button" hidden type="button">로그아웃</button><button id="profileButton" type="button" class="user-button" title="내 정보 변경"><span class="user-avatar" id="profileAvatar">나</span><span id="profileLabel">내 정보 설정</span><svg class="chev" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 8 5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       </div>
     </header>
 
@@ -2158,18 +2158,6 @@ body.calendar-focused .daily-check-line>.daily-quick-delete:focus-visible{
       <footer class="attachment-viewer-footer"><span>Esc 키 또는 닫기 버튼으로 돌아가기</span><div id="attachmentViewerGalleryControls" class="attachment-viewer-gallery-controls" hidden><button type="button" id="attachmentViewerPrev" class="outline-button" aria-label="이전 첨부 이미지">‹</button><span id="attachmentViewerGalleryCount" aria-live="polite"></span><button type="button" id="attachmentViewerNext" class="outline-button" aria-label="다음 첨부 이미지">›</button></div><button type="button" class="outline-button" id="attachmentViewerDone">닫기</button></footer>
     </div>
   </dialog>
-  <dialog id="cloudSettingsDialog" class="modal cloud-settings-dialog" aria-labelledby="cloudSettingsTitle">
-    <form id="cloudSettingsForm" method="dialog" class="cloud-settings-form">
-      <div class="cloud-settings-header"><div><span class="small-kicker">SUPABASE CONNECTION</span><h2 id="cloudSettingsTitle">클라우드 연결 설정</h2></div><button type="button" id="cloudSettingsClose" class="close-modal" aria-label="닫기">×</button></div>
-      <p class="cloud-settings-description">Supabase 프로젝트 주소와 <b>공개용 Publishable Key</b>를 입력합니다. 연결 후 아이디·비밀번호로 계정을 만들거나 로그인하면 데이터가 동기화됩니다.</p>
-      <label class="field"><span>Project URL</span><input id="cloudUrlInput" type="url" spellcheck="false" autocomplete="off" placeholder="https://xxxxxxxx.supabase.co" required></label>
-      <label class="field"><span>Publishable Key</span><input id="cloudKeyInput" type="text" spellcheck="false" autocomplete="off" placeholder="sb_publishable_..." required></label>
-      <div class="cloud-setup-help">Supabase 대시보드 → <b>Connect</b> 또는 <b>Project Settings → API Keys</b>에서 확인합니다. 연결 전 <b>Y_Callender_Supabase_setup_v74.sql</b>을 SQL Editor에서 실행하고 <b>Authentication → Providers → Email → Confirm Email을 끔</b>으로 설정하세요. 첫 화면에서 새 계정을 생성할 수 있습니다.</div>
-      <p class="cloud-cloud-warning">보안 주의: <strong>secret key / service_role</strong>는 절대 입력하지 마세요. 업무ID 비밀번호는 기존 버전과 동일하게 별도 암호화 없이 저장되므로 민감한 자격증명 보관에는 주의가 필요합니다.</p>
-      <p class="form-error" id="cloudSettingsError" role="alert" hidden></p>
-      <div class="cloud-settings-footer"><button type="button" id="cloudSettingsReset" class="outline-button">연결 해제</button><span class="footer-spacer"></span><button type="button" id="cloudSettingsCancel" class="outline-button">취소</button><button type="submit" class="primary-button">연결 정보 저장</button></div>
-    </form>
-  </dialog>
   <!-- v76: Initial account gate with flexible password input. -->
   <div id="authOverlay" class="auth-overlay" role="main" aria-label="계정 로그인">
     <form id="authForm" class="auth-card" autocomplete="on">
@@ -2191,22 +2179,23 @@ body.calendar-focused .daily-check-line>.daily-quick-delete:focus-visible{
       <p id="authMessage" role="status" aria-live="polite" class="auth-error"></p>
       <div id="authSignupHint" class="auth-signup-hint" hidden>아이디는 원문 대신 일방향 해시로 계정을 구분합니다. 비밀번호는 글자 수와 문자 종류를 제한하지 않으며, 서버에는 키 유도값이 전달되어 Supabase Auth에서 다시 해시로 저장됩니다. 짧고 쉬운 비밀번호는 추측당하기 쉬우므로 가급적 길게 설정하세요. 이메일 복구 기능은 제공하지 않습니다.</div>
       <div class="auth-connect-footer"><small id="authUsernameHelp">아이디는 3~32자 · 비밀번호는 길이·문자 종류 제한 없음(빈 비밀번호 제외)</small>
-        <div><span id="authCloudStatus" class="auth-config-state">Supabase 연결 설정이 필요합니다.</span> · <button type="button" id="authCloudSettingsButton" class="cloud-link-btn">연결 설정</button></div>
+        <div><span id="authCloudStatus" class="auth-config-state">Supabase 자동 연결을 확인하는 중입니다.</span></div>
       </div>
     </form>
   </div>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 <script>
-// Blank config = offline preview mode. Fill with your Supabase Project URL and publishable key to enable cloud sync.
-// Never place a service_role key or a secret key in a public web page.
-// v73: only public connection settings are stored here. NEVER store secret/service-role keys.
-const Y_CAL_CLOUD_SETTINGS_KEY = 'ycallender-supabase-settings-v1';
-let savedCloudConfig = {};
-try { savedCloudConfig = JSON.parse(localStorage.getItem(Y_CAL_CLOUD_SETTINGS_KEY)||'{}')||{}; } catch (_) {}
-window.JARI_CONFIG = {
-  supabaseUrl: String(savedCloudConfig.supabaseUrl||''),
-  supabasePublishableKey: String(savedCloudConfig.supabasePublishableKey||'')
-};
+// Y Callender v77 — one-time website-owner setup (GitHub Pages auto-connect).
+// Edit the TWO quoted strings below BEFORE uploading index.html to GitHub.
+// ① Project URL  → Supabase project → Connect or Settings → Data API
+// ② Publishable Key → Supabase project → Settings → API Keys
+// All visitors will automatically use this same project without connection dialogs.
+// IMPORTANT: Only a PUBLIC sb_publishable_ key can go here.
+// NEVER paste any sb_secret_, service_role, database password or personal password.
+window.JARI_CONFIG = Object.freeze({
+  supabaseUrl: 'https://fxqzmpttaucaofopyeji.supabase.co',
+  supabasePublishableKey: 'sb_publishable_1floMZbrcxlYVpnUtPdbAw_a5dhOH2Q'
+});
 
 </script>
 <script id="ycalendar-recurrence-rules-v59">
@@ -5326,7 +5315,7 @@ injectDialogs();window.JariBudget={render,presets,totals,normalizeDate,showBoard
   'use strict';
   const $ = id => document.getElementById(id);
   const cfg=window.JARI_CONFIG||{};
-  const configured=/^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/i.test(cfg.supabaseUrl||'') && typeof cfg.supabasePublishableKey==='string' && cfg.supabasePublishableKey.length>15;
+  const configured=/^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/i.test(cfg.supabaseUrl||'') && /^sb_publishable_[A-Za-z0-9_-]{10,}$/.test(cfg.supabasePublishableKey||'');
   let client=null,user=null,loaded=false,authMode='login',authBusy=false;
   const badge=document.querySelector('.demo-badge');
   const display=(s)=>{if(badge)badge.textContent=s;};
@@ -5400,7 +5389,7 @@ injectDialogs();window.JariBudget={render,presets,totals,normalizeDate,showBoard
   async function submitAuth(event){
     event.preventDefault();
     if(authBusy)return;
-    if(!configured||!client){errorUI('먼저 하단의 연결 설정에서 Supabase 프로젝트를 연결해 주세요.');return;}
+    if(!configured||!client){errorUI('사이트에 Supabase 자동 연결 정보가 등록되지 않았습니다. 사이트 관리자에게 알려주세요.');return;}
     try{
       const name=normalizedUsername();
       const password=$('authPassword').value;
@@ -5586,10 +5575,10 @@ injectDialogs();window.JariBudget={render,presets,totals,normalizeDate,showBoard
   $('authLoginTab').addEventListener('click',()=>setAuthMode('login'));
   $('authSignupTab').addEventListener('click',()=>setAuthMode('signup'));
   setAuthMode('login');
-  $('authCloudStatus').textContent=configured?'클라우드 설정 완료':'Supabase 연결이 필요합니다';
+  $('authCloudStatus').textContent=configured?'Supabase 자동 연결 활성화':'사이트 관리자 설정 필요';
   $('authCloudStatus').classList.toggle('is-ready',configured);
   $('logoutButton').addEventListener('click',signOut);
-  if(!configured){display('연결 설정 필요');return;} 
+  if(!configured){display('사이트 관리자 설정 필요');errorUI('홈페이지 관리자가 Supabase Project URL과 Publishable Key를 index.html에 등록해야 합니다.');return;} 
   display('연결 중');
   let writeQueue=Promise.resolve();
   function enqueue(fn){writeQueue=writeQueue.then(fn).catch(err=>notice(`클라우드 저장 실패: ${err.message||'통신 오류'}. 새로고침 전에 연결을 확인하세요.`));}
@@ -5907,37 +5896,6 @@ injectDialogs();window.JariBudget={render,presets,totals,normalizeDate,showBoard
  draw();
 })();
 </script>
-<script id="ycallender-cloud-settings-v73">
-(() => {
-  'use strict';
-  const $=id=>document.getElementById(id);
-  const dialog=$('cloudSettingsDialog');
-  const form=$('cloudSettingsForm');
-  const fail=(message)=>{$('cloudSettingsError').textContent=message;$('cloudSettingsError').hidden=!message;};
-  function openSettings(){
-    $('cloudUrlInput').value=window.JARI_CONFIG?.supabaseUrl||'';
-    $('cloudKeyInput').value=window.JARI_CONFIG?.supabasePublishableKey||'';
-    fail('');dialog.showModal();
-  }
-  $('cloudSettingsButton').addEventListener('click',openSettings);
-  $('authCloudSettingsButton').addEventListener('click',openSettings);
-  $('cloudSettingsClose').addEventListener('click',()=>dialog.close());
-  $('cloudSettingsCancel').addEventListener('click',()=>dialog.close());
-  form.addEventListener('submit',e=>{
-    e.preventDefault();
-    const url=$('cloudUrlInput').value.trim().replace(/\/$/,'');
-    const key=$('cloudKeyInput').value.trim();
-    if(!/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(url)){fail('올바른 Supabase Project URL을 입력해주세요.');return;}
-    if(!/^sb_publishable_[A-Za-z0-9_-]{10,}$/.test(key)){fail('sb_publishable_ 로 시작하는 공개용 키를 입력해주세요. Secret / service_role 키는 사용할 수 없습니다.');return;}
-    try{localStorage.setItem('ycallender-supabase-settings-v1',JSON.stringify({supabaseUrl:url,supabasePublishableKey:key}));}
-    catch(_){fail('브라우저 저장소를 사용할 수 없습니다. 브라우저 설정을 확인해주세요.');return;}
-    window.location.reload();
-  });
-  $('cloudSettingsReset').addEventListener('click',()=>{
-    if(!confirm('이 브라우저의 Supabase 연결 정보만 지웁니다. 클라우드 데이터와 기존 로컬 자료는 삭제되지 않습니다. 계속할까요?'))return;
-    localStorage.removeItem('ycallender-supabase-settings-v1');window.location.reload();
-  });
-})();
-</script>
+
 </body>
 </html>
