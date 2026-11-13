@@ -2185,7 +2185,7 @@ body.calendar-focused .daily-check-line>.daily-quick-delete:focus-visible{
   </div>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 <script>
-// Y Callender v77 — one-time website-owner setup (GitHub Pages auto-connect).
+// Y Callender v78 — preconfigured automatic Supabase connection (GitHub Pages auto-connect).
 // Edit the TWO quoted strings below BEFORE uploading index.html to GitHub.
 // ① Project URL  → Supabase project → Connect or Settings → Data API
 // ② Publishable Key → Supabase project → Settings → API Keys
@@ -5575,7 +5575,7 @@ injectDialogs();window.JariBudget={render,presets,totals,normalizeDate,showBoard
   $('authLoginTab').addEventListener('click',()=>setAuthMode('login'));
   $('authSignupTab').addEventListener('click',()=>setAuthMode('signup'));
   setAuthMode('login');
-  $('authCloudStatus').textContent=configured?'Supabase 자동 연결 활성화':'사이트 관리자 설정 필요';
+  $('authCloudStatus').textContent=configured?'Supabase 자동 연결 활성화 · v78':'사이트 관리자 설정 필요';
   $('authCloudStatus').classList.toggle('is-ready',configured);
   $('logoutButton').addEventListener('click',signOut);
   if(!configured){display('사이트 관리자 설정 필요');errorUI('홈페이지 관리자가 Supabase Project URL과 Publishable Key를 index.html에 등록해야 합니다.');return;} 
