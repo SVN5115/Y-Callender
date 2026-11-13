@@ -1978,6 +1978,70 @@ body.calendar-focused .daily-check-line>.daily-quick-delete:focus-visible{
   body.calendar-focused .calendar-shortcuts { padding-right: 0 !important; }
 }
 </style>
+
+<style id="ycallender-v80-password-change">
+/* Account password change — same visual language as the profile dialog. */
+.profile-modal .profile-password-trigger{white-space:nowrap;color:#2b70c3;border-color:#c5d9f4;background:#f7faff;}
+.profile-modal .profile-password-trigger:hover{background:#ecf4ff;}
+.password-change-modal .modal-body{gap:16px;}
+.password-change-modal #passwordUsernameRow[hidden]{display:none!important;}
+.password-change-modal .password-change-hint{font-size:11px;color:#7890aa;line-height:1.7;}
+.password-change-modal #passwordChangeError[hidden]{display:none!important;}
+.password-change-modal #passwordChangeSubmit:disabled{opacity:.6;cursor:wait;}
+@media(max-width:430px){
+ .profile-modal .modal-footer{flex-wrap:wrap;gap:8px;}
+ .profile-modal .profile-password-trigger{margin-right:auto;}
+ .password-change-modal .modal-footer{gap:8px;}
+}
+</style>
+<style id="yc-v81-admin-styles">
+/* Admin controls are never shown by name alone. Server authorization is authoritative. */
+.yc-admin-profile-button{white-space:nowrap;color:#2b70c3;border-color:#c5d9f4;background:#f7faff}
+.yc-admin-profile-button[hidden]{display:none!important}
+.yc-admin-modal{width:min(820px,calc(100vw - 24px));max-width:min(820px,calc(100vw - 24px))}
+.yc-admin-modal .modal-content{width:100%;max-width:100%;min-width:0}
+.yc-admin-modal .modal-body{gap:14px}
+.yc-admin-toolbar{display:flex;align-items:center;gap:8px}
+.yc-admin-filter-label{font-weight:700;font-size:12px;white-space:nowrap;color:#415e83}
+.yc-admin-toolbar input{flex:1;min-width:0;border:1px solid #d5e1f1;background:#fff;padding:10px 12px;border-radius:10px;font:inherit}
+.yc-admin-toolbar button{flex-shrink:0}
+.yc-admin-table-scroll{overflow:auto;border:1px solid #e1e9f5;border-radius:12px;background:#fff}
+.yc-admin-table{width:100%;border-collapse:collapse;min-width:540px;font-size:12px;color:#30465d}
+.yc-admin-table th{text-align:left;font-size:11px;color:#6681a4;background:#f4f8fe;font-weight:800;padding:12px;border-bottom:1px solid #e1e9f5}
+.yc-admin-table td{padding:12px;border-bottom:1px solid #edf1f7;vertical-align:middle}
+.yc-admin-table tbody tr:last-child td{border-bottom:0}
+.yc-admin-table td:first-child{font-weight:700;color:#1f416b}
+.yc-admin-table .yc-admin-reset-action{padding:7px 10px;border:1px solid #c5dbf6;border-radius:8px;background:#f1f7ff;color:#2362ad;font-weight:750;cursor:pointer;white-space:nowrap}
+.yc-admin-table .yc-admin-reset-action:hover{background:#e4efff}
+.yc-admin-table .yc-admin-self{font-size:11px;color:#6e8195}
+.yc-admin-loading,.yc-admin-hint{font-size:12px;line-height:1.65;color:#7a8da6}
+.yc-admin-hint{margin:0}
+.yc-admin-loading[hidden],#ycAdminListError[hidden],#ycAdminResetError[hidden],#ycAdminResetUsernameRow[hidden]{display:none!important}
+.yc-admin-pagination{display:flex;gap:12px;align-items:center;justify-content:center;font-size:12px;color:#637996}
+.yc-admin-pagination button:disabled{opacity:.4;cursor:not-allowed}
+.yc-admin-target{background:#f4f8fd;border-radius:10px;padding:12px 14px;font-size:13px;color:#3d5b80}
+.yc-admin-reset-modal .modal-body{gap:14px}
+.yc-admin-reset-modal #ycAdminResetSubmit:disabled{opacity:.55;cursor:wait}
+@media(max-width:620px){
+ .yc-admin-modal{width:calc(100vw - 16px);max-width:calc(100vw - 16px)}
+ .yc-admin-modal .modal-body{padding:14px}
+ .yc-admin-toolbar{flex-wrap:wrap}
+ .yc-admin-filter-label{width:100%}
+ .yc-admin-table{min-width:0;width:100%;font-size:12px}
+ .yc-admin-table thead{display:none}
+ .yc-admin-table tbody tr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:5px 8px;padding:13px;border-bottom:1px solid #edf1f7;align-items:center}
+ .yc-admin-table tbody tr:last-child{border-bottom:0}
+ .yc-admin-table td{display:block;border:0;padding:0;min-width:0}
+ .yc-admin-table td:nth-child(1){grid-column:1/3;grid-row:1;font-size:13px}
+ .yc-admin-table td:nth-child(2){grid-column:1;grid-row:2;font-size:11px;color:#7287a1}
+ .yc-admin-table td:nth-child(3){grid-column:1;grid-row:3;font-size:11px;color:#7287a1}
+ .yc-admin-table td:nth-child(4){grid-column:2;grid-row:2/span 2;justify-self:end}
+ .yc-admin-table td:nth-child(2)::before{content:"가입 · "}
+ .yc-admin-table td:nth-child(3)::before{content:"접속 · "}
+ .profile-modal .modal-footer{flex-wrap:wrap}
+ .profile-modal .yc-admin-profile-button{margin-right:auto}
+}
+</style>
 </head>
 <body class="calendar-focused">
   <div class="shell">
@@ -2110,7 +2174,53 @@ body.calendar-focused .daily-check-line>.daily-quick-delete:focus-visible{
     </div>
   </dialog>
   <dialog class="modal profile-modal" id="profileModal" aria-labelledby="profileTitle">
-    <form id="profileForm" class="modal-content"><div class="modal-header"><div><span class="small-kicker">MY PROFILE</span><h2 id="profileTitle">내 정보 설정</h2></div><button type="button" class="close-modal" data-close>×</button></div><div class="modal-body"><p class="profile-explain">일정 등록 시 자동으로 입력될 이름과 소속을 설정합니다.</p><label class="field"><span>내 이름 <em>*</em></span><input id="profileName" required placeholder="이름 입력" maxlength="30" /></label><label class="field"><span>소속 부서</span><input id="profileTeam" placeholder="소속 부서 입력" maxlength="40" /></label></div><div class="modal-footer"><button type="button" class="outline-button" data-close>취소</button><button type="submit" class="primary-button">저장하기</button></div></form>
+    <form id="profileForm" class="modal-content"><div class="modal-header"><div><span class="small-kicker">MY PROFILE</span><h2 id="profileTitle">내 정보 설정</h2></div><button type="button" class="close-modal" data-close>×</button></div><div class="modal-body"><p class="profile-explain">일정 등록 시 자동으로 입력될 이름과 소속을 설정합니다.</p><label class="field"><span>내 이름 <em>*</em></span><input id="profileName" required placeholder="이름 입력" maxlength="30" /></label><label class="field"><span>소속 부서</span><input id="profileTeam" placeholder="소속 부서 입력" maxlength="40" /></label></div><div class="modal-footer"><button type="button" id="openPasswordChange" class="outline-button profile-password-trigger">암호 변경</button><button type="button" id="openAdminAccounts" class="outline-button yc-admin-profile-button" hidden>계정 관리</button><span class="footer-spacer"></span><button type="button" class="outline-button" data-close>취소</button><button type="submit" class="primary-button">저장하기</button></div></form>
+  </dialog>
+  <dialog class="modal password-change-modal" id="passwordChangeModal" aria-labelledby="passwordChangeTitle">
+    <form id="passwordChangeForm" class="modal-content">
+      <div class="modal-header"><div><span class="small-kicker">ACCOUNT SECURITY</span><h2 id="passwordChangeTitle">암호 변경</h2></div><button type="button" class="close-modal" data-pw-close aria-label="닫기">×</button></div>
+      <div class="modal-body">
+        <p class="profile-explain">기존 암호를 확인한 후 새 암호로 변경합니다. 변경된 암호는 다음 로그인부터 사용합니다.</p>
+        <label class="field" id="passwordUsernameRow" hidden><span>아이디 <em>*</em></span><input id="passwordChangeUsername" type="text" autocomplete="username" placeholder="기존 계정 아이디"></label>
+        <label class="field"><span>기존 암호 <em>*</em></span><input id="passwordChangeCurrent" type="password" required autocomplete="current-password" placeholder="현재 사용 중인 암호"></label>
+        <label class="field"><span>새 암호 <em>*</em></span><input id="passwordChangeNew" type="password" required autocomplete="new-password" placeholder="변경할 암호 입력"></label>
+        <label class="field"><span>새 암호 확인 <em>*</em></span><input id="passwordChangeConfirm" type="password" required autocomplete="new-password" placeholder="새 암호를 다시 입력"></label>
+        <p class="password-change-hint">암호의 글자 수나 문자 종류는 제한하지 않습니다. 단, 빈 암호는 사용할 수 없습니다.</p>
+        <p id="passwordChangeError" class="form-error" role="alert" aria-live="polite" hidden></p>
+      </div>
+      <div class="modal-footer"><button type="button" class="outline-button" data-pw-close>취소</button><span class="footer-spacer"></span><button id="passwordChangeSubmit" type="submit" class="primary-button">암호 변경하기</button></div>
+    </form>
+  </dialog>
+  <!-- v81: Account administration, rendered only after the server validates the administrator. -->
+  <dialog id="ycAdminAccountsModal" class="modal yc-admin-modal" aria-labelledby="ycAdminAccountsTitle">
+    <div class="modal-content">
+      <div class="modal-header"><div><span class="small-kicker">ADMINISTRATION</span><h2 id="ycAdminAccountsTitle">계정 관리</h2></div><button type="button" class="close-modal" data-yc-admin-close aria-label="닫기">×</button></div>
+      <div class="modal-body">
+        <p class="profile-explain">관리자는 계정 목록을 확인하고 타인의 비밀번호를 재설정할 수 있습니다. 기존 비밀번호는 조회할 수 없습니다.</p>
+        <div class="yc-admin-toolbar"><label class="yc-admin-filter-label" for="ycAdminFilter">계정 검색</label><input id="ycAdminFilter" type="search" placeholder="아이디로 찾기 (현재 페이지)" autocomplete="off"><button type="button" class="outline-button" id="ycAdminReload">새로고침</button></div>
+        <div id="ycAdminLoading" class="yc-admin-loading" role="status" aria-live="polite">계정 목록을 불러오는 중입니다…</div>
+        <div class="yc-admin-table-scroll"><table class="yc-admin-table"><thead><tr><th scope="col">아이디</th><th scope="col">가입일</th><th scope="col">최근 로그인</th><th scope="col">관리</th></tr></thead><tbody id="ycAdminAccountsRows"></tbody></table></div>
+        <p class="yc-admin-hint">기존 계정은 해당 사용자가 다시 로그인하면 아이디가 표시됩니다. 회원에게 전송되는 별도 알림은 없습니다.</p>
+        <p class="form-error" id="ycAdminListError" role="alert" hidden></p>
+        <div class="yc-admin-pagination"><button type="button" class="outline-button" id="ycAdminPrev">이전</button><span id="ycAdminPageStatus">1페이지</span><button type="button" class="outline-button" id="ycAdminNext">다음</button></div>
+      </div>
+      <div class="modal-footer"><span class="footer-spacer"></span><button type="button" class="outline-button" data-yc-admin-close>닫기</button></div>
+    </div>
+  </dialog>
+  <dialog id="ycAdminResetModal" class="modal yc-admin-reset-modal" aria-labelledby="ycAdminResetTitle">
+    <form id="ycAdminResetForm" class="modal-content">
+      <div class="modal-header"><div><span class="small-kicker">ADMINISTRATION</span><h2 id="ycAdminResetTitle">계정 암호 초기화</h2></div><button type="button" class="close-modal" data-yc-reset-close aria-label="닫기">×</button></div>
+      <div class="modal-body">
+        <p class="profile-explain">선택한 계정의 비밀번호를 새로 지정합니다. 사용자에게 변경 내용을 별도로 전달해 주세요.</p>
+        <p class="yc-admin-target">대상 계정: <strong id="ycAdminResetTarget"></strong></p>
+        <label class="field" id="ycAdminResetUsernameRow" hidden><span>대상 아이디 확인 <em>*</em></span><input id="ycAdminResetUsername" type="text" autocomplete="off" placeholder="해당 사용자의 아이디"></label>
+        <label class="field"><span>새 비밀번호 <em>*</em></span><input id="ycAdminResetPassword" type="password" autocomplete="new-password" required placeholder="새 비밀번호"></label>
+        <label class="field"><span>새 비밀번호 확인 <em>*</em></span><input id="ycAdminResetConfirm" type="password" autocomplete="new-password" required placeholder="새 비밀번호 다시 입력"></label>
+        <p class="yc-admin-hint">비밀번호 원문은 저장하거나 표시하지 않습니다. 글자 수와 문자 종류 제한은 없지만, 안전한 비밀번호를 권장합니다.</p>
+        <p id="ycAdminResetError" class="form-error" role="alert" hidden></p>
+      </div>
+      <div class="modal-footer"><button type="button" class="outline-button" data-yc-reset-close>취소</button><span class="footer-spacer"></span><button id="ycAdminResetSubmit" type="submit" class="primary-button">새 암호로 변경</button></div>
+    </form>
   </dialog>
   <dialog class="modal workspace-modal" id="itemModal" aria-labelledby="itemModalTitle">
     <form id="itemForm" class="modal-content"><div class="modal-header"><div><span class="small-kicker">PERSONAL WORKSPACE</span><h2 id="itemModalTitle">항목 추가</h2></div><button type="button" class="close-modal" id="closeItemModal">×</button></div>
@@ -5337,6 +5447,26 @@ injectDialogs();window.JariBudget={render,presets,totals,normalizeDate,showBoard
   const cfg=window.JARI_CONFIG||{};
   const configured=/^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/i.test(cfg.supabaseUrl||'') && /^sb_publishable_[A-Za-z0-9_-]{10,}$/.test(cfg.supabasePublishableKey||'');
   let client=null,user=null,loaded=false,authMode='login',authBusy=false;
+  let createClientFactory=null, signedInUsername='', passwordChanging=false;
+  const ACCOUNT_NAME_CACHE='ycallender:auth-username:v80';
+  function rememberAccountUsername(name){
+    signedInUsername=name;
+    try{sessionStorage.setItem(ACCOUNT_NAME_CACHE,JSON.stringify({userId:user.id,name}));}catch{}
+  }
+  function clearAccountUsername(){
+    signedInUsername='';
+    try{sessionStorage.removeItem(ACCOUNT_NAME_CACHE);}catch{}
+  }
+  async function restoreAccountUsername(){
+    signedInUsername='';
+    try{
+      const record=JSON.parse(sessionStorage.getItem(ACCOUNT_NAME_CACHE)||'null');
+      if(record?.userId===user?.id && typeof record.name==='string' &&
+          (await accountEmail(record.name))===String(user.email||'').toLowerCase()){
+        signedInUsername=record.name;
+      }
+    }catch{}
+  }
   const badge=document.querySelector('.demo-badge');
   const display=(s)=>{if(badge)badge.textContent=s;};
   function errorUI(message,informational=false){const elem=$('authMessage');elem.textContent=message;elem.classList.toggle('is-info',informational);}
@@ -5389,6 +5519,56 @@ injectDialogs();window.JariBudget={render,presets,totals,normalizeDate,showBoard
     // Supabase project has enabled its stronger password character requirements.
     return 'Yc!9_'+hex;
   }
+  async function changeAccountPassword(currentPassword,newPassword,usernameOverride=''){
+    if(passwordChanging)throw new Error('이미 암호를 변경하고 있습니다.');
+    if(!active()||!createClientFactory)throw new Error('로그인 상태와 Supabase 연결을 확인해 주세요.');
+    if(!currentPassword||!newPassword)throw new Error('기존 암호와 새 암호를 모두 입력해 주세요.');
+    if(currentPassword===newPassword)throw new Error('새 암호는 기존 암호와 다르게 입력해 주세요.');
+    passwordChanging=true;
+    try{
+      const candidate=(signedInUsername||String(usernameOverride||'').trim().normalize('NFKC').toLowerCase());
+      if(!candidate)throw new Error('계정 확인을 위해 아이디를 입력해 주세요.');
+      const expectedEmail=await accountEmail(candidate);
+      const {data:currentData,error:currentError}=await client.auth.getUser();
+      if(currentError||!currentData?.user||currentData.user.id!==user.id)
+        throw new Error('로그인 세션이 만료되었습니다. 다시 로그인해 주세요.');
+      if(expectedEmail!==String(currentData.user.email||'').toLowerCase())
+        throw new Error('아이디가 현재 로그인한 계정과 일치하지 않습니다.');
+
+      // Verify the CURRENT password in an isolated auth client, so the main
+      // session is not replaced or signed out when a password is checked.
+      const verifier=createClientFactory(cfg.supabaseUrl.replace(/\/$/,''),cfg.supabasePublishableKey,{
+        auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}
+      });
+      const candidatePassword=await authPasswordForServer(candidate,currentPassword);
+      let {data:verified,error:verifyError}=await verifier.auth.signInWithPassword({email:expectedEmail,password:candidatePassword});
+      // v75 used raw password storage. Keep that account type changeable too.
+      if(verifyError && /invalid login credentials|invalid_credentials/i.test(String(verifyError.message||'')) &&
+          currentPassword.length>=10 && currentPassword.length<=128){
+        const previous=await verifier.auth.signInWithPassword({email:expectedEmail,password:currentPassword});
+        if(!previous.error){verified=previous.data;verifyError=null;}
+      }
+      if(verifyError){
+        if(/invalid login credentials|invalid_credentials/i.test(String(verifyError.message||'')))
+          throw new Error('기존 암호가 올바르지 않습니다.');
+        throw verifyError;
+      }
+      if(!verified?.user||verified.user.id!==currentData.user.id)
+        throw new Error('현재 로그인한 계정의 암호를 확인하지 못했습니다.');
+
+      const next=await authPasswordForServer(candidate,newPassword);
+      const {data:updated,error:updateError}=await client.auth.updateUser({password:next});
+      if(updateError){
+        if(/reauth|nonce|recent login/i.test(String(updateError.message||'')))
+          throw new Error('Supabase에서 추가 이메일 재인증을 요구합니다. 인증 정책을 확인해 주세요.');
+        throw updateError;
+      }
+      if(!updated?.user||updated.user.id!==currentData.user.id)
+        throw new Error('암호 변경 후 계정 확인에 실패했습니다. 다시 로그인해 주세요.');
+      rememberAccountUsername(candidate);
+      return true;
+    }finally{passwordChanging=false;}
+  }
   async function loadRows(){
     if(!client||!user)return;
     const all=[];let offset=0;
@@ -5405,6 +5585,7 @@ injectDialogs();window.JariBudget={render,presets,totals,normalizeDate,showBoard
     $('authOverlay').hidden=true;$('logoutButton').hidden=false;
     display('☁ Supabase 동기화');
     updateLocalImportButton();
+    window.dispatchEvent(new CustomEvent('ycallender:account-ready',{detail:{client,user,username:signedInUsername}}));
   }
   async function submitAuth(event){
     event.preventDefault();
@@ -5440,6 +5621,7 @@ injectDialogs();window.JariBudget={render,presets,totals,normalizeDate,showBoard
         if(!data?.user)throw new Error('로그인 계정을 확인하지 못했습니다.');
         user=data.user;
       }
+      rememberAccountUsername(name);
       await loadRows();
       $('authPassword').value='';$('authPasswordConfirm').value='';errorUI('');
     }catch(err){
@@ -5463,7 +5645,8 @@ injectDialogs();window.JariBudget={render,presets,totals,normalizeDate,showBoard
   async function signOut(){
     if(!confirm('로그아웃하시겠습니까?'))return;
     const {error}=await client.auth.signOut();if(error){notice('로그아웃 실패: '+error.message);return;}
-    user=null;loaded=false;events=[];
+    window.dispatchEvent(new Event('ycallender:account-signed-out'));
+    clearAccountUsername();user=null;loaded=false;events=[];
     // v73: logout clears visible cloud rows, but preserves the older local backup.
     window.JariWorkspace.setCloudRows([]);render();
     $('authOverlay').hidden=false;$('logoutButton').hidden=true;display('로그인 필요');
@@ -5589,13 +5772,14 @@ injectDialogs();window.JariBudget={render,presets,totals,normalizeDate,showBoard
   }
   $('cloudImportButton').addEventListener('click',importLocalRecords);
   window.JariCloud={isConfigured:()=>configured,isOnline:active,replaceAll,deleteGuideRecords,uploadAttachment,signedAttachmentUrl,removeAttachment};
+  window.JariAccount={hasUsername:()=>Boolean(signedInUsername),changePassword:changeAccountPassword};
   // Always show the account gate first; no authenticated content is displayed until loadRows succeeds.
   $('authOverlay').hidden=false;
   $('authForm').addEventListener('submit',submitAuth);
   $('authLoginTab').addEventListener('click',()=>setAuthMode('login'));
   $('authSignupTab').addEventListener('click',()=>setAuthMode('signup'));
   setAuthMode('login');
-  $('authCloudStatus').textContent=configured?'Supabase 자동 연결 활성화 · v79':'사이트 관리자 설정 필요';
+  $('authCloudStatus').textContent=configured?'Supabase 자동 연결 활성화 · v80':'사이트 관리자 설정 필요';
   $('authCloudStatus').classList.toggle('is-ready',configured);
   $('logoutButton').addEventListener('click',signOut);
   if(!configured){display('사이트 관리자 설정 필요');errorUI('홈페이지 관리자가 Supabase Project URL과 Publishable Key를 index.html에 등록해야 합니다.');return;} 
@@ -5609,15 +5793,53 @@ injectDialogs();window.JariBudget={render,presets,totals,normalizeDate,showBoard
   (async()=>{
     try{
       const {createClient}=await import('https://esm.sh/@supabase/supabase-js@2.119.0?bundle');
+      createClientFactory=createClient;
       client=createClient(cfg.supabaseUrl.replace(/\/$/,''),cfg.supabasePublishableKey,{auth:{autoRefreshToken:true,persistSession:true,storage:window.sessionStorage,detectSessionInUrl:false}});
-      client.auth.onAuthStateChange((event)=>{if(event==='SIGNED_OUT'&&user){user=null;loaded=false;events=[];window.JariWorkspace.setCloudRows([]);render();$('authOverlay').hidden=false;$('logoutButton').hidden=true;display('로그인 필요');}});
+      client.auth.onAuthStateChange((event)=>{if(event==='SIGNED_OUT'&&user){window.dispatchEvent(new Event('ycallender:account-signed-out'));clearAccountUsername();user=null;loaded=false;events=[];window.JariWorkspace.setCloudRows([]);render();$('authOverlay').hidden=false;$('logoutButton').hidden=true;display('로그인 필요');}});
       const {data,error}=await client.auth.getUser();
       if(error||!data.user){display('로그인 필요');return;}
-      user=data.user;await loadRows();
+      user=data.user;await restoreAccountUsername();await loadRows();
     }catch(err){errorUI('Supabase 연결 실패: '+(err.message||'네트워크 또는 설정을 확인하세요'));display('연결 실패');}
   })();
 })();
 
+</script>
+<script id="ycallender-v80-password-change-script">
+(()=>{'use strict';
+ const $=id=>document.getElementById(id);
+ const dialog=$('passwordChangeModal'),form=$('passwordChangeForm'),submit=$('passwordChangeSubmit');
+ const error=$('passwordChangeError'),usernameRow=$('passwordUsernameRow');
+ if(!dialog||!form)return;
+ function setError(message){error.textContent=message||'';error.hidden=!message;}
+ function clearForm(){form.reset();setError('');submit.disabled=false;submit.textContent='암호 변경하기';}
+ $('openPasswordChange').addEventListener('click',()=>{
+   $('profileModal').close();
+   clearForm();
+   usernameRow.hidden=Boolean(window.JariAccount?.hasUsername?.());
+   $('passwordChangeUsername').required=!usernameRow.hidden;
+   dialog.showModal();
+   (usernameRow.hidden?$('passwordChangeCurrent'):$('passwordChangeUsername')).focus();
+ });
+ dialog.querySelectorAll('[data-pw-close]').forEach(button=>button.addEventListener('click',()=>dialog.close()));
+ dialog.addEventListener('close',clearForm);
+ form.addEventListener('submit',async e=>{
+   e.preventDefault();
+   if(submit.disabled)return;
+   const current=$('passwordChangeCurrent').value, next=$('passwordChangeNew').value,
+      confirmNext=$('passwordChangeConfirm').value, username=$('passwordChangeUsername').value;
+   if(!current||!next){setError('기존 암호와 새 암호를 모두 입력해 주세요.');return;}
+   if(next!==confirmNext){setError('새 암호와 새 암호 확인이 일치하지 않습니다.');return;}
+   if(current===next){setError('기존 암호와 다른 새 암호를 입력해 주세요.');return;}
+   setError('');submit.disabled=true;submit.textContent='변경 중…';
+   try{
+     if(!window.JariAccount?.changePassword)throw new Error('암호 변경 기능을 불러오지 못했습니다. 새로고침 후 다시 시도해 주세요.');
+     await window.JariAccount.changePassword(current,next,username);
+     dialog.close();
+     const toast=$('toast');if(toast){toast.textContent='암호가 변경되었습니다. 다음 로그인부터 새 암호를 사용하세요.';toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),3300);}
+   }catch(err){setError(String(err?.message||'암호 변경에 실패했습니다.'));}
+   finally{submit.disabled=false;submit.textContent='암호 변경하기';}
+ });
+})();
 </script>
 
 <dialog id="workQuickModal" class="work-dialog" aria-labelledby="workQuickTitle">
@@ -5936,6 +6158,113 @@ injectDialogs();window.JariBudget={render,presets,totals,normalizeDate,showBoard
   mutations.observe(toolbar, { subtree: true, attributes: true, attributeFilter: ['hidden','style','class'] });
   window.addEventListener('resize', syncReservedWidth, { passive: true });
   syncReservedWidth();
+})();
+</script>
+<script id="yc-v81-admin-script">
+(()=>{'use strict';
+ const $=id=>document.getElementById(id);
+ const openButton=$('openAdminAccounts');
+ const modal=$('ycAdminAccountsModal'), resetModal=$('ycAdminResetModal');
+ if(!openButton||!modal||!resetModal)return;
+ let sb=null, account=null, activeUsername='', admin=false, page=1, rows=[], hasNext=false, activeReset=null, epoch=0;
+ const listError=$('ycAdminListError'), resetError=$('ycAdminResetError');
+ function msg(node,message){node.textContent=message||'';node.hidden=!message;}
+ function normalError(error){
+   const s=String(error?.message||error?.context?.message||error||'요청에 실패했습니다.');
+   if(/not found|404/i.test(s))return '관리자 서버 기능(yc-admin)이 아직 설치되지 않았습니다. Supabase Edge Functions를 확인하세요.';
+   if(/forbidden|403|권한/i.test(s))return '관리자 권한이 확인되지 않았습니다. 관리자 등록 SQL을 확인하세요.';
+   return s;
+ }
+ async function invoke(action,data={}){
+   if(!sb)throw new Error('먼저 로그인해 주세요.');
+   const {data:payload,error}=await sb.functions.invoke('yc-admin',{body:{action,...data}});
+   if(error){
+     // supabase-js FunctionsHttpError wraps response details.
+     try { const j=await error.context?.json?.(); if(j?.error)throw new Error(j.error); }catch(e){if(e?.message&&e!==error)throw e;}
+     throw new Error(normalError(error));
+   }
+   if(!payload?.ok)throw new Error(String(payload?.error||'관리자 서버가 요청을 처리하지 못했습니다.'));
+   return payload;
+ }
+ function fmt(date){if(!date)return '—';const d=new Date(date);return Number.isNaN(d.getTime())?'—':d.toLocaleString('ko-KR',{year:'numeric',month:'2-digit',day:'2-digit'});}
+ function td(text){const cell=document.createElement('td');cell.textContent=text;return cell;}
+ function render(){
+   const tbody=$('ycAdminAccountsRows');tbody.replaceChildren();
+   const query=$('ycAdminFilter').value.trim().toLocaleLowerCase();
+   const visible=rows.filter(r=>(r.username||r.label||'').toLocaleLowerCase().includes(query));
+   if(!visible.length){const tr=document.createElement('tr');const cell=td(rows.length?'검색 결과가 없습니다.':'등록된 계정이 없습니다.');cell.colSpan=4;tr.append(cell);tbody.append(tr);}
+   for(const r of visible){
+     const tr=document.createElement('tr');
+     const display=r.username||`아이디 미등록 · ${String(r.id).slice(0,8)}`;
+     tr.append(td(display),td(fmt(r.created_at)),td(fmt(r.last_sign_in_at)));
+     const c=document.createElement('td');
+     if(r.id===account?.id){const span=document.createElement('span');span.className='yc-admin-self';span.textContent='내 계정';c.append(span);}
+     else if(r.is_admin){const span=document.createElement('span');span.className='yc-admin-self';span.textContent='관리자';c.append(span);}
+     else {const b=document.createElement('button');b.type='button';b.className='yc-admin-reset-action';b.textContent='암호 초기화';b.addEventListener('click',()=>openReset(r));c.append(b);}
+     tr.append(c);tbody.append(tr);
+   }
+   $('ycAdminPageStatus').textContent=`${page}페이지`;
+   $('ycAdminPrev').disabled=page<=1;
+   $('ycAdminNext').disabled=!hasNext;
+ }
+ async function list(target=1){
+   if(!admin||!sb)return;
+   const load=$('ycAdminLoading');load.hidden=false;
+   msg(listError,'');$('ycAdminReload').disabled=true;
+   try{const response=await invoke('list',{page:target});
+     rows=Array.isArray(response.users)?response.users:[];page=target;hasNext=Boolean(response.hasNext);render();
+   }catch(e){rows=[];hasNext=false;render();msg(listError,normalError(e));}
+   finally{load.hidden=true;$('ycAdminReload').disabled=false;}
+ }
+ function openReset(row){
+   activeReset=row;
+   $('ycAdminResetForm').reset();msg(resetError,'');
+   $('ycAdminResetTarget').textContent=row.username||`미등록 계정 (${String(row.id).slice(0,8)})`;
+   $('ycAdminResetUsernameRow').hidden=Boolean(row.username);
+   $('ycAdminResetUsername').required=!row.username;
+   modal.close();resetModal.showModal();
+   (row.username?$('ycAdminResetPassword'):$('ycAdminResetUsername')).focus();
+ }
+ $('ycAdminResetForm').addEventListener('submit',async(event)=>{
+   event.preventDefault();if(!admin||!activeReset)return;
+   const pass=$('ycAdminResetPassword').value,confirm=$('ycAdminResetConfirm').value;
+   const username=activeReset.username||$('ycAdminResetUsername').value.trim();
+   if(!pass){msg(resetError,'새 암호를 입력해 주세요.');return;}
+   if(pass!==confirm){msg(resetError,'새 암호와 확인이 일치하지 않습니다.');return;}
+   if(!username){msg(resetError,'대상 아이디를 입력해 주세요.');return;}
+   const submit=$('ycAdminResetSubmit');submit.disabled=true;submit.textContent='변경 중…';msg(resetError,'');
+   try{
+     await invoke('reset',{targetUserId:activeReset.id,targetUsername:username,newPassword:pass});
+     $('ycAdminResetForm').reset();resetModal.close();activeReset=null;
+     alert('비밀번호를 새 암호로 변경했습니다. 해당 사용자에게 새 암호를 안전하게 전달해 주세요.');
+     modal.showModal();await list(page);
+   }catch(e){msg(resetError,normalError(e));}
+   finally{submit.disabled=false;submit.textContent='새 암호로 변경';}
+ });
+ openButton.addEventListener('click',()=>{
+   if(!admin)return;
+   $('profileModal').close();$('ycAdminFilter').value='';modal.showModal();list(1);
+ });
+ $('ycAdminReload').addEventListener('click',()=>list(page));
+ $('ycAdminPrev').addEventListener('click',()=>{if(page>1)list(page-1);});
+ $('ycAdminNext').addEventListener('click',()=>{if(hasNext)list(page+1);});
+ $('ycAdminFilter').addEventListener('input',render);
+ modal.querySelectorAll('[data-yc-admin-close]').forEach(b=>b.addEventListener('click',()=>modal.close()));
+ resetModal.querySelectorAll('[data-yc-reset-close]').forEach(b=>b.addEventListener('click',()=>{resetModal.close();activeReset=null;modal.showModal();}));
+ window.addEventListener('ycallender:account-ready',async(ev)=>{
+   const e=++epoch;
+   sb=ev.detail?.client||null;account=ev.detail?.user||null;
+   activeUsername=ev.detail?.username||'';admin=false;openButton.hidden=true;
+   if(!sb||!account)return;
+   // Each user registers THEIR OWN username with the secured server, never another user's.
+   // The source username remains hashed in Supabase Auth and encrypted in the admin-only directory.
+   if(!activeUsername)return;
+   try{const res=await invoke('register',{username:activeUsername});
+     if(e!==epoch||!account)return;
+     admin=Boolean(res.isAdmin);openButton.hidden=!admin;
+   }catch(err){if(activeUsername==='admin')console.warn('계정 관리 설정 미완료:',normalError(err));}
+ });
+ window.addEventListener('ycallender:account-signed-out',()=>{epoch++;admin=false;openButton.hidden=true;sb=null;account=null;activeUsername='';if(modal.open)modal.close();if(resetModal.open)resetModal.close();});
 })();
 </script>
 </body>
