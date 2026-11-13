@@ -2408,6 +2408,51 @@ body.calendar-focused .detail-rail #addForDay.add-inline span:first-child {
 }
 </style>
 
+
+<style id="ycalender-v91-calendar-bar-refinement">
+/* v91: v90 대비 달력 일정 바 높이 10% 추가 축소, 글자 굵기 약 5% 완화.
+   데이터, 클릭 동작, 중요 일정 강조색, 교차 배경색은 그대로 유지. */
+body.calendar-focused .day-cell .event-chip{
+  height:18.63px;         /* 20.7 × 0.90 */
+  min-height:18.63px;
+  max-height:18.63px;
+  padding:1px 5px;
+  line-height:1.08;
+  border-radius:3px;
+  font-weight:618;        /* 650 -> 618 (-4.9%) */
+}
+body.calendar-focused .day-cell .event-chip .chip-title{
+  font-weight:760;        /* 800 -> 760 (-5%) */
+}
+body.calendar-focused .day-cell .event-chip .chip-owner{
+  font-weight:780;        /* 820 -> 780 (-4.9%) */
+}
+body.calendar-focused .day-cell .event-chip.priority-chief,
+body.calendar-focused .day-cell .event-chip.priority-director{
+  font-weight:855;        /* 900 -> 855 (-5%) */
+}
+@media (max-width:760px){
+  body.calendar-focused .day-cell .event-chip{
+    height:15.39px;       /* 17.1 × 0.90 */
+    min-height:15.39px;
+    max-height:15.39px;
+    padding:0.5px 3px;
+  }
+}
+</style>
+
+<style id="ycalender-v92-calendar-bar-fontsize">
+/* v92: Only calendar date-cell event bar labels are 5% smaller than v91.
+   Keep existing 18.63px/15.39px heights, weights, zebra fills and click behavior. */
+body.calendar-focused .day-cell .event-chip {
+  font-size:10.45px; /* desktop 11px * 0.95 */
+}
+@media (max-width:760px) {
+  body.calendar-focused .day-cell .event-chip {
+    font-size:8.55px; /* mobile 9px * 0.95 */
+  }
+}
+</style>
 </head>
 <body class="calendar-focused">
   <div class="shell">
@@ -2886,7 +2931,7 @@ function renderCalendar(){
    const estimatedHoliday=Number(key.slice(0,4))>=2028 && Number(key.slice(0,4))<=2100;
    const holidayContent=holiday?`<div class="kr-holiday-label" title="${estimatedHoliday?'현행 법령 기준 예상 공휴일 · 발표 전 변경 가능':'대한민국 공휴일 · 공식 월력 기준'} · ${escapeHtml(holiday)}">${escapeHtml(holiday)}</div>`:'';
    const max=view==='week'?10:5;
-   const chips=matches.slice(0,max).map(e=>{const type=category(e.type),important=priorityOf(e)<2;return `<button class="event-chip ${e.chief?'priority-chief':e.director?'priority-director':''} ${isDailyDone(e,key)?'is-done':''}" data-id="${escapeHtml(e.id)}" title="${escapeHtml(eventDisplayTitle(e))}" style="color:${important?(e.chief?'#b75b1b':'#245ca5'):type.color};background:${important?(e.chief?'#fff1e4':'#e9f1ff'):type.tint};border-color:${important?(e.chief?'#f59c53':'#6d9ce4'):type.color}"><span class="chip-title">${escapeHtml(eventDisplayTitle(e))}</span></button>`;}).join('');
+   const chips=matches.slice(0,max).map((e,barIndex)=>{const type=category(e.type),important=priorityOf(e)<2;const zebraBackground=barIndex%2===0?"#eaf2ff":"#f8fafc";return `<button class="event-chip ${e.chief?'priority-chief':e.director?'priority-director':''} ${isDailyDone(e,key)?'is-done':''}" data-id="${escapeHtml(e.id)}" title="${escapeHtml(eventDisplayTitle(e))}" style="color:${important?(e.chief?'#b75b1b':'#245ca5'):type.color};background:${important?(e.chief?'#fff1e4':'#e9f1ff'):zebraBackground};border-color:${important?(e.chief?'#f59c53':'#6d9ce4'):type.color}"><span class="chip-title">${escapeHtml(eventDisplayTitle(e))}</span></button>`;}).join('');
    return `<div class="day-cell ${isThisMonth?'':'other-month'} ${key===todayStr?'today':''} ${key===selectedDate?'selected':''} ${d.getDay()===0?'sunday':''} ${d.getDay()===6?'saturday':''} ${holiday?'kr-holiday-day':''}" data-day="${key}" tabindex="0" role="button" aria-label="${key}${holiday?' '+holiday:''} 일정 ${matches.length}건"><span class="day-number">${d.getDate()}</span>${holidayContent}<div class="cell-events">${chips}${matches.length>max?`<span class="more-events">+${matches.length-max}개 더보기</span>`:''}</div></div>`;
  }).join('');
  root.querySelectorAll('.day-cell').forEach(node=>{node.addEventListener('click',()=>selectDay(node.dataset.day));node.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();selectDay(node.dataset.day);}});});
